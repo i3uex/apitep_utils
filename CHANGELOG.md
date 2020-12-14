@@ -8,4 +8,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add method to path class so a prefix can be added to a file name in a path.
 - First version of the library.

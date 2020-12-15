@@ -1,6 +1,7 @@
 import unittest
 
-from apitep import Encrypter
+from apitep_utils import Encrypter
+
 
 class TestEncrypter(unittest.TestCase):
 

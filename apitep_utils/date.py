@@ -4,8 +4,10 @@ from datetime import datetime
 
 class Date:
 
+    DEFAULT_FORMAT = "%Y-%m-%d"
+
     @staticmethod
-    def change_format(date: str, input_format: str, output_format: str) -> str:
+    def change_format(date: str, input_format: str, output_format: str = DEFAULT_FORMAT) -> str:
         """
         Change date format, using a hyphen as separator instead of slash. Date
         parts order is year-month-day, instead of day-month-year.

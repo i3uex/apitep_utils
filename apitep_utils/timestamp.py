@@ -3,6 +3,7 @@ import logging
 
 log = logging.getLogger(__name__)
 
+
 class Timestamp:
     @staticmethod
     def get(format_string: str) -> str:

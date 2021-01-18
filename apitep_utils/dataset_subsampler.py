@@ -1,11 +1,13 @@
 import logging
 import random
 from pathlib import Path
-from .timestamp import *
 
 import pandas
 
+from .timestamp import Timestamp
+
 log = logging.getLogger(__name__)
+
 
 class DatasetSubsampler:
     ROWS_KEY = "rows"
@@ -36,7 +38,6 @@ class DatasetSubsampler:
                 self.dataset_lines = len(file.readlines())
         except IOError:
             log.error(f"- error opening file \"{self.dataset_path}\"")
-
 
     def subsample_rows(self, rows: int):
         """

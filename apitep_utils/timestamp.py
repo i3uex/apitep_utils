@@ -7,10 +7,10 @@ class Timestamp:
     @staticmethod
     def get(format_string: str) -> str:
         """
-        Get a timestamp with the format especified.
+        Get a timestamp with the format specified.
 
         :param format_string: format the timestamp must have.
-        :return: timestamp with the format especified.
+        :return: timestamp with the format specified.
         :rtype: str
         """
 

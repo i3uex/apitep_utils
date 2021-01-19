@@ -15,16 +15,19 @@ class DatasetSubsampler:
     FILE_NAME_SEPARATOR = "_"
 
     dataset_path: str = ""
+    randomize: bool = True
     dataset_lines: int = 0
     dataset_subsample: pandas.DataFrame = None
 
-    def __init__(self, dataset_path: str):
+    def __init__(self, dataset_path: str, randomize: bool = True):
         """
         Init DatasetSubsampler class instance. Count the number of lines in the
         file and store that number in a private property. The first line of the
         dataset must be a header.
 
         :param dataset_path: path to the dataset to subsample.
+        :param randomize: if True, the subsample will be randomly selected; if
+        False, the rows will be selected starting from the beggining.
         """
 
         log.info("Init DatasetSubsampler")
@@ -32,6 +35,7 @@ class DatasetSubsampler:
                   f"dataset_path={dataset_path}")
 
         self.dataset_path = dataset_path
+        self.randomize = randomize
 
         try:
             with open(self.dataset_path, "r") as file:
@@ -111,7 +115,11 @@ class DatasetSubsampler:
         log.debug(f"DatasetSubsampler.__load_dataset_rows("
                   f"rows={rows}")
 
-        skip_rows = sorted(random.sample(range(1, self.dataset_lines + 1), self.dataset_lines - rows))
+        if self.randomize:
+            skip_rows = sorted(random.sample(range(1, self.dataset_lines + 1), self.dataset_lines - rows))
+        else:
+            skip_rows = range(1 + rows, self.dataset_lines + 1)
+
         self.dataset_subsample = pandas.read_csv(
             self.dataset_path,
             dtype=str,

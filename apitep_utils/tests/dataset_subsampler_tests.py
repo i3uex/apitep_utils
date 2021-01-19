@@ -74,3 +74,29 @@ class TestDatasetSubsampler(unittest.TestCase):
         self.assertIsNotNone(
             dataset_subsampler.dataset_subsample,
             "Dataset subsample should not be None")
+
+    def test_dataset_subsampler_subsample_random(self):
+        # I don't like that this test can fail if the randomly selected row
+        # is the first.
+        dataset_subsampler = DatasetSubsampler("test_dataset.csv", randomize=True)
+        dataset_subsampler.subsample_rows(1)
+        passenger_identifier_expected = 892
+        passenger_identifier_obtained = dataset_subsampler.dataset_subsample.iloc[0]["PassengerId"]
+        self.assertNotEqual(
+            passenger_identifier_obtained,
+            passenger_identifier_expected,
+            f"Passenger identifier obtained ({passenger_identifier_obtained}) "
+            f"should not be ({passenger_identifier_expected}).")
+        pass
+
+    def test_dataset_subsampler_subsample_not_random(self):
+        dataset_subsampler = DatasetSubsampler("test_dataset.csv", randomize=False)
+        dataset_subsampler.subsample_rows(1)
+        passenger_identifier_expected = 892
+        passenger_identifier_obtained = dataset_subsampler.dataset_subsample.iloc[0]["PassengerId"]
+        self.assertNotEqual(
+            passenger_identifier_obtained,
+            passenger_identifier_expected,
+            f"Passenger identifier obtained ({passenger_identifier_obtained}) "
+            f"should be ({passenger_identifier_expected}).")
+        pass

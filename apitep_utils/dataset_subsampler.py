@@ -18,6 +18,7 @@ class DatasetSubsampler:
     randomize: bool = True
     dataset_lines: int = 0
     dataset_subsample: pandas.DataFrame = None
+    dataset_subsample_path: str = ""
 
     def __init__(self, dataset_path: str, randomize: bool = True):
         """
@@ -137,6 +138,6 @@ class DatasetSubsampler:
 
         path = Path(self.dataset_path)
         timestamp = Timestamp.file()
-        output_filename = f"{path.stem}_subset_{operation_key}_{operation_value}_{timestamp}{path.suffix}"
+        self.dataset_subsample_path = f"{path.stem}_subset_{operation_key}_{operation_value}_{timestamp}{path.suffix}"
 
-        self.dataset_subsample.to_csv(output_filename, index=False)
+        self.dataset_subsample.to_csv(self.dataset_subsample_path, index=False)

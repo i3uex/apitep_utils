@@ -35,7 +35,7 @@ class DatasetSubsampler:
 
         try:
             with open(self.dataset_path, "r") as file:
-                self.dataset_lines = len(file.readlines())
+                self.dataset_lines = len(file.readlines()) - 1
         except IOError:
             log.error(f"- error opening file \"{self.dataset_path}\"")
 
@@ -90,7 +90,7 @@ class DatasetSubsampler:
         elif percentage >= 100:
             rows = self.dataset_lines
         else:
-            rows = int((self.dataset_lines - 1) * percentage / 100)
+            rows = int(self.dataset_lines * percentage / 100)
 
         if rows > 0:
             self.__load_dataset_rows(rows)

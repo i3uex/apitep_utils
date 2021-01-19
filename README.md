@@ -14,5 +14,15 @@ This way, you will install this library in editable mode, meaning that a symlink
 
 ## Classes
 
-- **DatasetSubsampler**: get a random subsample of a CSV dataset, either especifying the number of rows or a percentage of them. 
-- **Timestamp**: generate timestamps. You can use them to add a suffix to a filename, for example.
+### DatasetSubsampler
+
+- Get a subsample of a CSV dataset, either specifying the number of rows or a percentage of them.
+- The dataset must have a header row. This row won't count towards the subset.
+- Choose random values or number of rows from the beginning.
+- Let the class generate the output file name for you or choose one yourself.
+- If the number of rows or percentage is 0 or less, no subsample will be generated.
+- If the number of rows is greater than the total number of rows, or the percentage is greater than 100%, the whole dataset will be copied.
+
+### Timestamp
+
+Generate timestamps. You can use them to add a suffix to a filename, for example.

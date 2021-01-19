@@ -27,7 +27,7 @@ class DatasetSubsampler:
 
         :param dataset_path: path to the dataset to subsample.
         :param randomize: if True, the subsample will be randomly selected; if
-        False, the rows will be selected starting from the beggining.
+        False, the rows will be selected starting from the beginning.
         """
 
         log.info("Init DatasetSubsampler")

@@ -1,4 +1,5 @@
 import unittest
+from pathlib import Path
 
 from apitep_utils import DatasetSubsampler
 
@@ -100,3 +101,13 @@ class TestDatasetSubsampler(unittest.TestCase):
             f"Passenger identifier obtained ({passenger_identifier_obtained}) "
             f"should be ({passenger_identifier_expected}).")
         pass
+
+    def test_dataset_subsampler_subsample_dataset_subsample_path(self):
+        dataset_subsample_path = "test_dataset_subsample.csv"
+        dataset_subsampler = DatasetSubsampler("test_dataset.csv", dataset_subsample_path=dataset_subsample_path)
+        dataset_subsampler.subsample_rows(1)
+        dataset_subsample_path_exists = Path("test_dataset_subsample.csv").is_file()
+        self.assertTrue(
+            dataset_subsample_path_exists,
+            f"File at \"{dataset_subsample_path_exists}\" should exist")
+

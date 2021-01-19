@@ -20,7 +20,12 @@ class DatasetSubsampler:
     dataset_subsample: pandas.DataFrame = None
     dataset_subsample_path: str = ""
 
-    def __init__(self, dataset_path: str, randomize: bool = True):
+    def __init__(
+            self,
+            dataset_path: str,
+            randomize: bool = True,
+            dataset_subsample_path: str = None
+    ):
         """
         Init DatasetSubsampler class instance. Count the number of lines in the
         file and store that number in a private property. The first line of the
@@ -29,14 +34,19 @@ class DatasetSubsampler:
         :param dataset_path: path to the dataset to subsample.
         :param randomize: if True, the subsample will be randomly selected; if
         False, the rows will be selected starting from the beginning.
+        :param dataset_subsample_path: path where the dataset subsample should
+        be stored.
         """
 
         log.info("Init DatasetSubsampler")
         log.debug(f"DatasetSubsampler.__init("
-                  f"dataset_path={dataset_path}")
+                  f"dataset_path={dataset_path}, "
+                  f"randomize={randomize}, "
+                  f"dataset_subsample_path={dataset_subsample_path}")
 
         self.dataset_path = dataset_path
         self.randomize = randomize
+        self.dataset_subsample_path = dataset_subsample_path
 
         try:
             with open(self.dataset_path, "r") as file:
@@ -44,7 +54,7 @@ class DatasetSubsampler:
         except IOError:
             log.error(f"- error opening file \"{self.dataset_path}\"")
 
-    def subsample_rows(self, rows: int):
+    def subsample_rows(self, rows: int) -> str:
         """
         Create a subset of the dataset with the number of rows passed. If the
         number of rows of the subset is greater than the number of rows in the
@@ -52,16 +62,21 @@ class DatasetSubsampler:
 
         :param rows: number of rows the subsample must contain. If less or equal
         than zero, only the headers will be saved.
+
+        :return: path to the file where the dataset subsample will be saved.
+        :rtype: str
         """
 
         log.info("Subsample rows")
         log.debug(f"DatasetSubsampler.subsample_rows("
                   f"rows={rows}")
 
+        dataset_subsample_path = ""
+
         rows_fixed = rows
         if rows_fixed <= 0:
             log.debug("- rows is less or equal to 0, subsample will not be saved")
-            return
+            return dataset_subsample_path
         elif rows_fixed > self.dataset_lines:
             log.debug("- "
                       "subsample rows is greater than dataset rows, a copy of the "
@@ -70,10 +85,12 @@ class DatasetSubsampler:
 
         if rows_fixed > 0:
             self.__load_dataset_rows(rows_fixed)
-            self.__save_dataset_subsample(
+            dataset_subsample_path = self.__save_dataset_subsample(
                 operation_key=DatasetSubsampler.ROWS_KEY,
                 operation_value=rows
             )
+
+        return dataset_subsample_path
 
     def subsample_percentage(self, percentage: int):
         """
@@ -83,15 +100,20 @@ class DatasetSubsampler:
 
         :param percentage: percentage of the number of rows the subsample must
         contain. If less or equal than zero, only the headers will be saved.
+
+        :return: path to the file where the dataset subsample will be saved.
+        :rtype: str
         """
 
         log.info("Subsample percentage")
         log.debug(f"DatasetSubsampler.subsample_percentage("
                   f"percentage={percentage}")
 
+        dataset_subsample_path = ""
+
         if percentage <= 0:
             log.debug("- percentage is less or equal to 0, subsample will not be saved")
-            return
+            return dataset_subsample_path
         elif percentage >= 100:
             rows = self.dataset_lines
         else:
@@ -99,10 +121,12 @@ class DatasetSubsampler:
 
         if rows > 0:
             self.__load_dataset_rows(rows)
-            self.__save_dataset_subsample(
+            dataset_subsample_path = self.__save_dataset_subsample(
                 operation_key=DatasetSubsampler.PERCENTAGE_KEY,
                 operation_value=percentage
             )
+
+        return dataset_subsample_path
 
     def __load_dataset_rows(self, rows: int):
         """
@@ -126,11 +150,19 @@ class DatasetSubsampler:
             dtype=str,
             skiprows=skip_rows)
 
-    def __save_dataset_subsample(self, operation_key: str, operation_value: int):
+    def __save_dataset_subsample(self, operation_key: str, operation_value: int) -> str:
         """
         Save the subsample in the same folder the original dataset is. Append
         three suffixes to the file name: a) "subset", b) subset operation
         indicator, and c) a timestamp.
+
+        :param operation_key: identifier of the subsample operation performed
+        (rows or percentage).
+        :param operation_value: value of the subsample operation performed
+        (number of rows or percentage value).
+
+        :return: path to the file where the dataset subsample will be saved.
+        :rtype: str
         """
 
         log.info("Save data subsample")
@@ -138,6 +170,11 @@ class DatasetSubsampler:
 
         path = Path(self.dataset_path)
         timestamp = Timestamp.file()
-        self.dataset_subsample_path = f"{path.stem}_subset_{operation_key}_{operation_value}_{timestamp}{path.suffix}"
+        if self.dataset_subsample_path == "":
+            dataset_subsample_path = f"{path.stem}_subset_{operation_key}_{operation_value}_{timestamp}{path.suffix}"
+        else:
+            dataset_subsample_path = self.dataset_subsample_path
 
-        self.dataset_subsample.to_csv(self.dataset_subsample_path, index=False)
+        self.dataset_subsample.to_csv(dataset_subsample_path, index=False)
+
+        return dataset_subsample_path

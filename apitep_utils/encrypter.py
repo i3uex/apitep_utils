@@ -2,8 +2,8 @@ import hashlib
 import logging
 from enum import Enum
 
-class Encrypter:
 
+class Encrypter:
     class Algorithm(Enum):
         SHA1 = 1
         SHA224 = 2

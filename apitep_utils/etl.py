@@ -72,6 +72,22 @@ class ETL:
         self.output_df.to_csv(self.output_path_segment)
         self.save_report(self.output_df, self.output_path_segment)
 
+    def process(self):
+        """
+        Make all the changes needed in the input dataframe to get the output
+        dataframe.
+
+        Make sure to use `input_df` as the input of your pipeline, and to store
+        the resulting dataset in `output_df`.
+        """
+
+        log.info("Process dataset")
+        log.debug("ETL.process()")
+
+        self.output_df = self.input_df
+
+        raise NotImplementedError
+
     def parse_arguments(self):
         """
         Parse arguments provided via command line, and check if they are valid

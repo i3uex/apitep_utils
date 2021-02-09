@@ -3,7 +3,6 @@ import logging
 from pathlib import Path
 
 import pandas as pd
-from pandas_profiling import ProfileReport
 
 from apitep_utils import ArgumentParserHelper
 
@@ -130,6 +129,8 @@ class ETL:
         log.debug(f"ETL.save_report("
                   f"df={df},"
                   f"source_path_segment={source_path_segment})")
+
+        from pandas_profiling import ProfileReport
 
         source_path = Path(source_path_segment)
         output_path = source_path.with_suffix(".html")

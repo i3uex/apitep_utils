@@ -14,6 +14,10 @@ This way, you will install this library in editable mode, meaning that a symlink
 
 ## Classes
 
+### ETL
+
+Common enhance, transform and load tasks.
+
 ### DatasetSubsampler
 
 - Get a subsample of a CSV dataset, either specifying the number of rows or a percentage of them.

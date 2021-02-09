@@ -22,11 +22,19 @@ class ETL:
     description: str = "ETL"
     input_path_segment: str = None
     output_path_segment: str = None
+    input_separator: str = ","
+    output_separator: str = ","
 
     input_df: pd.DataFrame = None
     output_df: pd.DataFrame = None
 
-    def __init__(self, input_path_segment: str = None, output_path_segment: str = None):
+    def __init__(
+            self,
+            input_path_segment: str = None,
+            output_path_segment: str = None,
+            input_separator: str = None,
+            output_separator: str = None
+    ):
         """
         Init ETL class instance.
 
@@ -47,6 +55,12 @@ class ETL:
         if output_path_segment is not None:
             self.output_path_segment = output_path_segment
 
+        if input_separator is not None:
+            self.input_separator = input_separator
+
+        if output_separator is not None:
+            self.output_separator = output_separator
+
     def load(self):
         """
         Load the CSV dataset in the input path provided. Save a report in the
@@ -60,15 +74,32 @@ class ETL:
             log.debug("- input path is none, nothing to load or report about")
             return
 
-        self.input_df = pd.read_csv(self.input_path_segment)
+        self.input_df = pd.read_csv(
+            self.input_path_segment,
+            sep=self.input_separator)
         self.save_report(self.input_df, self.input_path_segment)
 
     def save(self):
-        if self.input_path_segment is None:
+        """
+        Save the CSV dataset in the output path provided. Save a report in the
+        same path, with the same name, but with HTML extension.
+        """
+
+        log.info("Save output dataset")
+        log.debug("ETL.save()")
+
+        if self.output_path_segment is None:
             log.debug("- output path is none, nothing to save or report about")
             return
 
-        self.output_df.to_csv(self.output_path_segment)
+        output_path = Path(self.output_path_segment)
+        output_path_parent = output_path.parent
+        if not output_path_parent.exists():
+            output_path_parent.mkdir(parents=True)
+
+        self.output_df.to_csv(
+            self.output_path_segment,
+            sep=self.output_separator)
         self.save_report(self.output_df, self.output_path_segment)
 
     def process(self):

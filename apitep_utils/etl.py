@@ -2,6 +2,7 @@ import argparse
 import logging
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 from apitep_utils import ArgumentParserHelper
@@ -178,6 +179,32 @@ class ETL:
 
         profile = ProfileReport(df, title=source_path.stem)
         profile.to_file(str(output_path))
+
+    def replace_column(self, source_column: str, destination_column: str) -> int:
+        """
+        Replace the destination column with the source column, then delete the
+        source column. Before hand, count the differences in values between
+        both columns and return that value.
+
+        :param source_column:
+        :param destination_column:
+
+        :return: number of differences between both columns.
+        :rtype: int
+        """
+
+        log.info("Replace one column with another")
+        log.debug(f"ETL.replace_column("
+                  f"source_column={source_column},"
+                  f"destination_column={destination_column})")
+
+        comparison = np.where(self.input_df[source_column] != self.input_df[destination_column])
+        changes = len(comparison[0])
+
+        self.input_df[destination_column] = self.input_df[source_column]
+        self.input_df.drop(labels=[source_column], axis="columns", inplace=True)
+
+        return changes
 
     def log_changes(self):
         """

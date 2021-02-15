@@ -24,6 +24,7 @@ class ETL:
     output_path_segment: str = None
     input_separator: str = ","
     output_separator: str = ","
+    save_reports: bool = True
 
     input_df: pd.DataFrame = None
     output_df: pd.DataFrame = None
@@ -33,7 +34,8 @@ class ETL:
             input_path_segment: str = None,
             output_path_segment: str = None,
             input_separator: str = None,
-            output_separator: str = None
+            output_separator: str = None,
+            save_reports: bool = None
     ):
         """
         Init ETL class instance.
@@ -61,6 +63,9 @@ class ETL:
         if output_separator is not None:
             self.output_separator = output_separator
 
+        if save_reports is not None:
+            self.save_reports = save_reports
+
     def load(self):
         """
         Load the CSV dataset in the input path provided. Save a report in the
@@ -77,7 +82,9 @@ class ETL:
         self.input_df = pd.read_csv(
             self.input_path_segment,
             sep=self.input_separator)
-        self.save_report(self.input_df, self.input_path_segment)
+
+        if self.save_reports:
+            self.save_report(self.input_df, self.input_path_segment)
 
     def save(self):
         """
@@ -100,7 +107,9 @@ class ETL:
         self.output_df.to_csv(
             self.output_path_segment,
             sep=self.output_separator)
-        self.save_report(self.output_df, self.output_path_segment)
+
+        if self.save_reports:
+            self.save_report(self.output_df, self.output_path_segment)
 
     def process(self):
         """

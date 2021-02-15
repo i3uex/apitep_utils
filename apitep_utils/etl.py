@@ -169,3 +169,14 @@ class ETL:
 
         profile = ProfileReport(df, title=source_path.stem)
         profile.to_file(str(output_path))
+
+    def log_changes(self):
+        """
+        Dump changes report to log. Users of this class must provide their own
+        versions of this method.
+        """
+
+        log.info("Log changes to source dataset")
+        log.debug("ETL.log_changes()")
+
+        raise NotImplementedError

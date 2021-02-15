@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add ETL class.
 - Add option to DatasetSubsampler to store the result in a file with known name.
 - Add option to DatasetSubsampler to get not random values from dataset.
 - Class to get a random subsample of a CSV dataset, either especifying the number of rows or a percentage of them.

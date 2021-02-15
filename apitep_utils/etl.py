@@ -158,7 +158,7 @@ class ETL:
 
         log.info("Save dataset report")
         log.debug(f"ETL.save_report("
-                  f"df={df},"
+                  f"df={len(df.index)} rows,"
                   f"source_path_segment={source_path_segment})")
 
         from pandas_profiling import ProfileReport

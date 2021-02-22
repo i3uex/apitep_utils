@@ -1,5 +1,6 @@
 import argparse
 import logging
+import time
 from pathlib import Path
 
 import numpy as np
@@ -216,3 +217,21 @@ class ETL:
         log.debug("ETL.log_changes()")
 
         raise NotImplementedError
+
+    @classmethod
+    def stopwatch(cls, func):
+        """
+        Create the decorator @ETL.stopwatch to easily measure the execution time
+        of a method. Time is measured before and after the execution of the
+        method. A debug log entry is added showing the difference.
+
+        :param func: method to measure.
+        """
+
+        def wrapper(self):
+            tic = time.perf_counter()
+            func(self)
+            toc = time.perf_counter()
+            log.debug(f"- time: {toc - tic:0.4f} s")
+
+        return wrapper

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add Swifter to ETL.
 - Add decorator to ETL class to ease time method execution time measurement.
 - Add ETL class.
 - Add option to DatasetSubsampler to store the result in a file with known name.

@@ -5,6 +5,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import swifter
 
 from apitep_utils import ArgumentParserHelper
 
@@ -235,3 +236,18 @@ class ETL:
             log.debug(f"- time: {toc - tic:0.4f} s")
 
         return wrapper
+
+    @staticmethod
+    def get_swifter_version() -> str:
+        """
+        Returns Swifter version. This is here just to avoid PyCharm removing
+        Swifter's import.
+
+        :return: Swifter version.
+        :rtype: str
+        """
+
+        log.info("Get Swifter version")
+        log.debug("ETL.get_swifter_version()")
+
+        return swifter.__version__

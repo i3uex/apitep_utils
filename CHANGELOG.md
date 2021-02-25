@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Refactor ETL, creating Transformation, a more generic class.
 - Add Swifter to ETL.
 - Add decorator to ETL class to ease time method execution time measurement.
 - Add ETL class.

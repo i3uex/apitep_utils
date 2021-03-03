@@ -1,4 +1,5 @@
 import logging
+import sys
 
 import numpy as np
 
@@ -55,3 +56,18 @@ class ETL(Transformation):
         log.debug("ETL.log_changes()")
 
         raise NotImplementedError
+
+    def execute(self):
+        """
+        Perform all the task needed for the ETL to complete.
+        """
+
+        log.info("Execute ETL")
+        log.debug("ETL.execute()")
+
+        if len(sys.argv) > 1:
+            self.parse_arguments()
+        self.load()
+        self.process()
+        self.save()
+        self.log_changes()

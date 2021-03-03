@@ -19,19 +19,22 @@ class Transformation:
     Create an instance of this class, tell it where is the source dataset and
     where the resulting one should be saved, and process the changes needed.
 
-    Optionally, generate a report about the source and destination datasets.
+    Optionally, generate a reports about the source and destination datasets,
+    on load or save.
     """
 
     class ReportType(Enum):
         Standard = "standard"
         Advanced = "advanced"
+        Both = "both"
 
     description: str = "Transformation"
     input_path_segment: str = None
     output_path_segment: str = None
     input_separator: str = ","
     output_separator: str = ","
-    save_reports: bool = True
+    save_report_on_load: bool = True
+    save_report_on_save: bool = True
     report_type: ReportType = ReportType.Standard
 
     input_df: pd.DataFrame = None
@@ -43,7 +46,8 @@ class Transformation:
             output_path_segment: str = None,
             input_separator: str = None,
             output_separator: str = None,
-            save_reports: bool = None,
+            save_report_on_load: bool = None,
+            save_report_on_save: bool = None,
             report_type: ReportType = None
     ):
         """
@@ -55,9 +59,10 @@ class Transformation:
         being processed, should be stored. Optional.
         :param input_separator: separator used in the input dataset. Optional.
         :param output_separator: separator used in the output dataset. Optional.
-        :param save_reports: save input and output dataset report if True.
-        :param report_type: control the type of the report saved if save_reports
-        is True.
+        :param save_report_on_load: save input dataset report if True.
+        :param save_report_on_save: save output dataset report if True.
+        :param report_type: control the type of the report saved if
+        save_report_on_load or save_report_on_save are True.
         """
 
         log.info("Init Transformation")
@@ -66,7 +71,8 @@ class Transformation:
                   f"output_path_segment={output_path_segment}, "
                   f"input_separator={input_separator}, "
                   f"output_separator={output_separator}, "
-                  f"save_reports={save_reports}, "
+                  f"save_report_on_load={save_report_on_load}, "
+                  f"save_report_on_save={save_report_on_save}, "
                   f"report_type={report_type})")
 
         if input_path_segment is not None:
@@ -81,8 +87,11 @@ class Transformation:
         if output_separator is not None:
             self.output_separator = output_separator
 
-        if save_reports is not None:
-            self.save_reports = save_reports
+        if save_report_on_load is not None:
+            self.save_report_on_load = save_report_on_load
+
+        if save_report_on_save is not None:
+            self.save_report_on_save = save_report_on_save
 
         if report_type is not None:
             self.report_type = report_type
@@ -104,8 +113,8 @@ class Transformation:
             self.input_path_segment,
             sep=self.input_separator)
 
-        if self.save_reports:
-            self.save_report()
+        if self.save_report_on_load:
+            self.save_report(self.input_df, self.input_path_segment)
 
     def save(self):
         """
@@ -129,8 +138,8 @@ class Transformation:
             self.output_path_segment,
             sep=self.output_separator)
 
-        if self.save_reports:
-            self.save_report()
+        if self.save_report_on_save:
+            self.save_report(self.output_df, self.output_path_segment)
 
     def process(self):
         """
@@ -175,7 +184,7 @@ class Transformation:
             data_file_path=arguments.output_path,
             check_is_file=False)
 
-    def save_report(self):
+    def save_report(self, dataframe: pd.DataFrame, source_path_segment: str):
         """
         Save a report about the provided dataframe in the path provided,
         changing the extension as needed. The type of the report depends on the
@@ -183,35 +192,42 @@ class Transformation:
         """
 
         log.info("Save dataset report")
-        log.debug("Transformation.save_report()")
+        log.debug(f"Transformation.save_report("
+                  f"dataframe={len(dataframe.index)} rows, "
+                  f"source_path_segment={source_path_segment})")
 
-        if not self.save_reports:
-            log.debug("Reports are not enabled")
-            return
-
-        if self.report_type == Transformation.ReportType.Advanced:
-            Transformation.save_advanced_report(
-                self.input_df,
-                self.input_path_segment)
-        else:
+        if self.report_type == Transformation.ReportType.Standard:
             Transformation.save_standard_report(
-                self.input_df,
-                self.input_path_segment)
+                dataframe,
+                source_path_segment)
+        elif self.report_type == Transformation.ReportType.Advanced:
+            Transformation.save_advanced_report(
+                dataframe,
+                source_path_segment)
+        elif self.report_type == Transformation.ReportType.Both:
+            Transformation.save_standard_report(
+                dataframe,
+                source_path_segment)
+            Transformation.save_advanced_report(
+                dataframe,
+                source_path_segment)
+        else:
+            raise NotImplementedError
 
     @staticmethod
-    def save_standard_report(df: pd.DataFrame, source_path_segment: str):
+    def save_standard_report(dataframe: pd.DataFrame, source_path_segment: str):
         """
         Save a report about the provided dataframe in the path provided,
         using Pandas Profiling, changing the extension to "html".
 
-        :param df: dataframe a report should be generated about.
+        :param dataframe: dataframe a report should be generated about.
         :param source_path_segment: path to the CSV data source used to create
         the dataframe. It will be used to compose the output path.
         """
 
         log.info("Save dataset standard report")
         log.debug(f"Transformation.save_standard_report("
-                  f"df={len(df.index)} rows,"
+                  f"df={len(dataframe.index)} rows,"
                   f"source_path_segment={source_path_segment})")
 
         from pandas_profiling import ProfileReport
@@ -220,23 +236,23 @@ class Transformation:
         output_path = source_path.with_suffix(".html")
         log.debug(f"- output_path: {output_path}")
 
-        profile = ProfileReport(df, title=source_path.stem)
+        profile = ProfileReport(dataframe, title=source_path.stem)
         profile.to_file(str(output_path))
 
     @staticmethod
-    def save_advanced_report(df: pd.DataFrame, source_path_segment: str):
+    def save_advanced_report(dataframe: pd.DataFrame, source_path_segment: str):
         """
         Save an advanced report about the provided dataframe in the path
         provided, changing the extension as needed.
 
-        :param df: dataframe a report should be generated about.
+        :param dataframe: dataframe a report should be generated about.
         :param source_path_segment: path to the CSV data source used to create
         the dataframe. It will be used to compose the output path.
         """
 
         log.info("Save dataset standard report")
         log.debug(f"Transformation.save_advanced_report("
-                  f"df={len(df.index)} rows,"
+                  f"df={len(dataframe.index)} rows,"
                   f"source_path_segment={source_path_segment})")
 
         pass

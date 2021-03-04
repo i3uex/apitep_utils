@@ -35,7 +35,7 @@ class Transformation:
     output_separator: str = ","
     save_report_on_load: bool = True
     save_report_on_save: bool = True
-    report_type: ReportType = ReportType.Standard
+    report_type: ReportType = ReportType.Advanced
 
     input_df: pd.DataFrame = None
     output_df: pd.DataFrame = None

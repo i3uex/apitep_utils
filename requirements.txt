@@ -1,4 +1,6 @@
 numpy~=1.20.1
-pandas~=1.2.2
-setuptools~=53.0.0
+pandas~=1.2.3
+setuptools==54.0.0
 swifter~=1.0.7
+argparse~=1.4.0
+scipy~=1.6.1

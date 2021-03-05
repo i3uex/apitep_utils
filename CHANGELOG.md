@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Class to perform list of dependency tests to help with feature selection.
+- Class to perform dependency tests. 
 - Refactor ETL, creating Transformation, a more generic class.
 - Add Swifter to ETL.
 - Add decorator to ETL class to ease time method execution time measurement.

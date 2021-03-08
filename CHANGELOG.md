@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Class to perform dependency tests. 
 - Refactor ETL, creating Transformation, a more generic class.
 - Add Swifter to ETL.
-- Add decorator to ETL class to ease time method execution time measurement.
+- Add a decorator to ETL class to ease time method execution time measurement.
 - Add ETL class.
 - Add option to DatasetSubsampler to store the result in a file with known name.
 - Add option to DatasetSubsampler to get not random values from dataset.

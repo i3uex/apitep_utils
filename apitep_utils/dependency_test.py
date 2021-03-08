@@ -10,15 +10,22 @@ log = logging.getLogger(__name__)
 class DependencyTest:
     """
     Hypothesis test focused in determining if a target variable depends on a
-    candidate variable. The specific test to perform must be provided by the
+    candidate variable. The specific test to perform must be selected by the
     user of the class.
 
-    H0 (null hypothesis): target variable depends on candidate variable.
-    H1 (alternative hypothesis): target variable does not depend on candidate
+    The test has two hypothesis:
+    - H0 (null hypothesis): target variable depends on candidate variable.
+    - H1 (alternative hypothesis): target variable does not depend on candidate
     variable.
 
+    The properties of the class are:
+    - test_type: test to perform, selected form a list of possible test
+    available in the enumeration TestType.
+    - dataframe: pandas data frame with the data needed to perform the test.
     - target: name of a pandas series with the values of the target variable.
     - candidate: a pandas series with the values of the candidate variable.
+    - p_value: cut value for the H0 of the test to be true. False if the result
+    of the test if greater than that.
     """
 
     class TestType(Enum):
@@ -30,8 +37,8 @@ class DependencyTest:
 
     test_type: TestType = TestType.Pearson
     dataframe: pd.DataFrame
-    target: str = ""
-    candidate: str = ""
+    target: str = "target"
+    candidate: str = "candidate"
     p_value: float = 0.05
 
     null_hypothesis_description: str = ""
@@ -49,6 +56,9 @@ class DependencyTest:
     ):
         """
         Create an instance of the dependency test.
+
+        Always use named parameters to initialize this class. All the arguments
+        are optional and fall back to default values if not provided.
 
         :param dataframe: pandas dataframe with the data the test should use.
         :param test_type: type of dependency test to perform.
@@ -82,7 +92,10 @@ class DependencyTest:
 
     def execute(self) -> bool:
         """
-        Perform the test.
+        Perform the test select by the user through the property test_type.
+
+        If the test selected is not implemented, the corresponding error will
+        be raised.
 
         :return: True if H_0 is accepted, False otherwise.
         :rtype: bool

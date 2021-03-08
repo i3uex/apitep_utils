@@ -13,7 +13,7 @@ class FeatureSelection:
     Select the features that a given feature depends on after performing a
     series of dependency tests (specific hypothesis tests) on them.
 
-    - df: pandas dataframe with all the variables relevant to this study.
+    - dataframe: pandas dataframe with all the variables relevant to this study.
     - target_name: name of the column where the target variable values are.
     - dependency_tests: list of instances of the class DependencyTest containing
     the description of the tests to perform on each candidate to influence the
@@ -22,14 +22,14 @@ class FeatureSelection:
     tests.
     """
 
-    df: pd.DataFrame
+    dataframe: pd.DataFrame
     target_name: str
     dependency_tests: List[DependencyTest]
     dependency_tests_results: List
 
     def __init__(
             self,
-            df: pd.DataFrame,
+            dataframe: pd.DataFrame,
             target_name: str,
             dependency_tests: List[DependencyTest]
     ):
@@ -37,7 +37,7 @@ class FeatureSelection:
         Create an instance of the class. Just store the parameters provided in
         the corresponding class attributes.
 
-        :param df: pandas dataframe with the variables of the study.
+        :param dataframe: pandas dataframe with the variables of the study.
         :param target_name: name of the column where the target variable values
         are.
         :param dependency_tests: list of instances of the class DependencyTest
@@ -47,11 +47,11 @@ class FeatureSelection:
 
         log.info("Init feature selection")
         log.debug(f"FeatureSelection.__init__("
-                  f"df={df}, "
+                  f"dataframe={dataframe}, "
                   f"target_name={target_name}, "
                   f"dependency_tests={dependency_tests})")
 
-        self.df = df
+        self.dataframe = dataframe
         self.target_name = target_name
         self.dependency_tests = dependency_tests
 

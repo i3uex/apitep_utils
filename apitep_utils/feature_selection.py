@@ -25,7 +25,7 @@ class FeatureSelection:
     dataframe: pd.DataFrame
     target_name: str
     dependency_tests: List[DependencyTest]
-    dependency_tests_results: List
+    dependency_tests_results: List[bool]
 
     def __init__(
             self,

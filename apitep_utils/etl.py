@@ -1,6 +1,5 @@
 import logging
 import sys
-from typing import List
 
 import numpy as np
 
@@ -20,7 +19,7 @@ class ETL(Transformation):
     """
 
     description: str = "ETL"
-    changes: List
+    changes = {}
 
     def replace_column(self, source_column: str, destination_column: str) -> int:
         """

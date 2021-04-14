@@ -1,5 +1,6 @@
 import logging
 import sys
+from typing import List
 
 import numpy as np
 
@@ -19,6 +20,7 @@ class ETL(Transformation):
     """
 
     description: str = "ETL"
+    changes: List
 
     def replace_column(self, source_column: str, destination_column: str) -> int:
         """
@@ -48,14 +50,14 @@ class ETL(Transformation):
 
     def log_changes(self):
         """
-        Dump changes report to log. Users of this class must provide their own
-        versions of this method.
+        Dump to log how many changes are made to UEx dataset.
         """
 
-        log.info("Log changes to source dataset")
-        log.debug("ETL.log_changes()")
+        log.info("Log dataset changes")
+        log.debug("log_changes()")
 
-        raise NotImplementedError
+        for key in self.changes:
+            log.info(f"- {key}: {self.changes[key]}")
 
     def execute(self):
         """

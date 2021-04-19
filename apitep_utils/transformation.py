@@ -29,6 +29,7 @@ class Transformation:
         Both = "both"
 
     description: str = "Transformation"
+    changes = {}
     input_path_segment: str = None
     output_path_segment: str = None
     input_separator: str = ","
@@ -156,6 +157,21 @@ class Transformation:
         self.output_df = self.input_df
 
         raise NotImplementedError
+
+    def log_changes(self):
+        """
+        Dump to log how many changes are made to the dataset.
+
+        The changes should be stored in the property `changes` as pair key,
+        value where the key is the description of the change, and the value is
+        what actually happened.
+        """
+
+        log.info("Log dataset changes")
+        log.debug("log_changes()")
+
+        for key in self.changes:
+            log.info(f"- {key}: {self.changes[key]}")
 
     def parse_arguments(self):
         """

@@ -19,7 +19,6 @@ class ETL(Transformation):
     """
 
     description: str = "ETL"
-    changes = {}
 
     def replace_column(self, source_column: str, destination_column: str) -> int:
         """
@@ -46,17 +45,6 @@ class ETL(Transformation):
         self.input_df.drop(labels=[source_column], axis="columns", inplace=True)
 
         return changes
-
-    def log_changes(self):
-        """
-        Dump to log how many changes are made to UEx dataset.
-        """
-
-        log.info("Log dataset changes")
-        log.debug("log_changes()")
-
-        for key in self.changes:
-            log.info(f"- {key}: {self.changes[key]}")
 
     def execute(self):
         """

@@ -39,12 +39,12 @@ class DependencyTest:
     dataframe: pd.DataFrame = None
     target: str = "target"
     candidate: str = "candidate"
-    p_value: float = 0.05
+    p_value: float = 0.05  # significance_level
 
     null_hypothesis_description: str = ""
     alternative_hypothesis_description: str = ""
-    p: float = 0.0
-    stat: float = 0.0
+    p: float = 0.0  # p_value
+    stat: float = 0.0  # statistic_value
 
     def __init__(
             self,
@@ -216,9 +216,9 @@ class DependencyTest:
         log.info(f"- null hypothesis description: {self.null_hypothesis_description}")
         log.info(f"- alternative hypothesis description: {self.alternative_hypothesis_description}")
         if test_result:
-            log.info(f"- null hypothesis accepted")
-        else:
             log.info(f"- alternative hypothesis accepted")
-        log.info(f"- cut value selected: {self.p_value}")
-        log.info(f"- cut value obtained: {self.p}")
-        log.info(f"- stat: {self.stat}")
+        else:
+            log.info(f"- null hypothesis accepted")
+        log.info(f"- cut value selected: {self.p_value}")  # fix description of the log entry
+        log.info(f"- cut value obtained: {self.p}")  # fix description of the log entry
+        log.info(f"- stat: {self.stat}")  # fix description of the log entry

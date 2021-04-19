@@ -67,4 +67,7 @@ class FeatureSelection:
         self.dependency_tests_results = []
         for dependency_test in self.dependency_tests:
             dependency_test_result = dependency_test.execute()
-            self.dependency_tests_results.append(dependency_test_result)
+            if dependency_test_result:
+                self.dependency_tests_results.append(dependency_test.candidate)
+                # cambiar nombre del resultado, dependency_test_result sería derivado de influencing_features
+                # influencing_features es el nombre de la lista devuelta

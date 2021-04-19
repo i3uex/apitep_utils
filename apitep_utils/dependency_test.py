@@ -36,7 +36,7 @@ class DependencyTest:
         WilcoxonRankSum = "Wilcoxon rank-sum"
 
     test_type: TestType = TestType.Pearson
-    dataframe: pd.DataFrame
+    dataframe: pd.DataFrame = None
     target: str = "target"
     candidate: str = "candidate"
     p_value: float = 0.05

@@ -46,8 +46,8 @@ class Integration(Transformation):
         save_report_on_load or save_report_on_save are True. Optional.
         """
 
-        log.info("Init Transformation")
-        log.debug(f"Transformation.__init__("
+        log.info("Init Integration")
+        log.debug(f"Integration.__init__("
                   f"input_path_segments={input_path_segments}, "
                   f"output_path_segment={output_path_segment}, "
                   f"input_separator={input_separator}, "
@@ -68,6 +68,12 @@ class Integration(Transformation):
 
         if input_path_segments is not None:
             self.input_path_segments = input_path_segments
+        if save_report_on_load is None:
+            self.save_report_on_load = False
+        if save_report_on_save is None:
+            self.save_report_on_load = True
+        if report_type is None:
+            self.report_type = Transformation.ReportType.Advanced
 
     def load(self):
         """

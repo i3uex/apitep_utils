@@ -271,6 +271,7 @@ class Transformation:
                   f"df={len(dataframe.index)} rows,"
                   f"source_path_segment={source_path_segment})")
 
+        # TODO: implement advanced report generation process
         pass
 
     @classmethod

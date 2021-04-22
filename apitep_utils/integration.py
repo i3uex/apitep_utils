@@ -138,6 +138,7 @@ class Integration(Transformation):
 
         arguments = argument_parser.parse_args()
         input_path_segments = arguments.input_paths
+        self.input_path_segments = []
         for input_path_segment in input_path_segments:
             self.input_path_segments.append(
                 ArgumentParserHelper.parse_data_file_path(

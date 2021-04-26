@@ -3,7 +3,7 @@ from typing import List
 import pandas as pd
 import logging
 
-from apitep_utils.dependency_test import DependencyTest
+from apitep_utils.hypothesistest import HypothesisTest
 
 log = logging.getLogger(__name__)
 
@@ -24,14 +24,14 @@ class FeatureSelection:
 
     dataframe: pd.DataFrame
     target_name: str
-    dependency_tests: List[DependencyTest]
+    dependency_tests: List[HypothesisTest]
     dependency_tests_results: List[bool]
 
     def __init__(
             self,
             dataframe: pd.DataFrame,
             target_name: str,
-            dependency_tests: List[DependencyTest]
+            dependency_tests: List[HypothesisTest]
     ):
         """
         Create an instance of the class. Just store the parameters provided in

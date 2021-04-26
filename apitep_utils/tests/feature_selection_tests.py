@@ -1,6 +1,6 @@
 import unittest
 
-from apitep_utils import DependencyTest, FeatureSelection
+from apitep_utils import HypothesisTest, FeatureSelection
 
 
 class TestFeatureSelection(unittest.TestCase):

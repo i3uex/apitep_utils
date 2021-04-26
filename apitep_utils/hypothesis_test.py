@@ -1,5 +1,6 @@
 import logging
 from enum import Enum
+from typing import List
 
 import pandas as pd
 from scipy.stats import kruskal, levene, pearsonr, ranksums, spearmanr, shapiro
@@ -38,8 +39,8 @@ class HypothesisTest:
 
     test_type: TestType = TestType.Pearson
     dataframe: pd.DataFrame = None
-    target: str = "target"
-    candidate: str = "candidate"
+    target: pd.Series = None
+    candidates: List[pd.Series] = None
     p_value: float = 0.05  # significance_level
 
     null_hypothesis_description: str = ""
@@ -51,8 +52,8 @@ class HypothesisTest:
             self,
             dataframe: pd.DataFrame = None,
             test_type: TestType = None,
-            target: str = None,
-            candidate: str = None,
+            target: pd.Series = None,
+            candidates: List[pd.Series] = None,
             p_value: float = None
     ):
         """
@@ -63,12 +64,14 @@ class HypothesisTest:
 
         :param dataframe: pandas dataframe with the data the test should use.
         :param test_type: type of tests to perform.
-        :param target: name of the pandas series with the values of the target
-        variable, the one that is supposed to influence the candidate. It is one
-        of the dataframe's columns.
-        :param candidate: name of the pandas series with the values of the
-        candidate variable, the one that is supposed to depend on the target
-        variable. It is one of the dataframe's columns.
+        :param target: pandas series with the values of the target variable, the
+        one that is supposed to influence the candidate. It is one of the
+        dataframe's columns.
+        :param candidates: list of pandas series with the values of the
+        candidates variable, the ones that are supposed to depend on the target
+        variable. They are dataframe's columns. If the test is numeric, only the
+        first item on the list will be used. If it is categorical, all will be
+        used.
         :param p_value: two-tailed p-value.
         """
 
@@ -76,8 +79,8 @@ class HypothesisTest:
         log.debug(f"Tests.__init__("
                   f"dataframe={len(dataframe.index)} rows, "
                   f"test_type={test_type}, "
-                  f"target={target}, "
-                  f"candidate={candidate}, "
+                  f"target={len(target.index)}, "
+                  f"candidates={len(candidates)}, "
                   f"p_value={p_value})")
 
         if dataframe is not None:
@@ -86,8 +89,8 @@ class HypothesisTest:
             self.test_type = test_type
         if target is not None:
             self.target = target
-        if candidate is not None:
-            self.candidate = candidate
+        if candidates is not None:
+            self.candidates = candidates
         if p_value is not None:
             self.p_value = p_value
 
@@ -140,8 +143,8 @@ class HypothesisTest:
         self.null_hypothesis_description = "Pearson's Null Hypothesis Description"
         self.alternative_hypothesis_description = "Pearson's Alternative Hypothesis Description"
 
-        x = self.dataframe[self.target]
-        y = self.dataframe[self.candidate]
+        x = self.target
+        y = self.candidates[0]
         self.stat, self.p = pearsonr(x, y)
 
     def execute_spearman(self):
@@ -155,8 +158,8 @@ class HypothesisTest:
         self.null_hypothesis_description = "Spearman's Null Hypothesis Description"
         self.alternative_hypothesis_description = "Spearman's Alternative Hypothesis Description"
 
-        a = self.dataframe[self.target]
-        b = self.dataframe[self.candidate]
+        a = self.target
+        b = self.candidates[0]
         self.stat, self.p = spearmanr(a, b)
 
     def execute_levene(self):
@@ -170,9 +173,7 @@ class HypothesisTest:
         self.null_hypothesis_description = "Levene's Null Hypothesis Description"
         self.alternative_hypothesis_description = "Levene's Alternative Hypothesis Description"
 
-        a = self.dataframe[self.target]
-        b = self.dataframe[self.candidate]
-        self.stat, self.p = levene(a, b)
+        self.stat, self.p = levene(*self.candidates)
 
     def execute_shapiro(self):
         """
@@ -185,7 +186,7 @@ class HypothesisTest:
         self.null_hypothesis_description = "Shapiro Null Hypothesis Description"
         self.alternative_hypothesis_description = "Shapiro Alternative Hypothesis Description"
 
-        a = self.dataframe[self.target]
+        a = self.target
         self.stat, self.p = shapiro(a)
 
     def execute_kruskal_wallis(self):
@@ -199,9 +200,7 @@ class HypothesisTest:
         self.null_hypothesis_description = "Kruskal-Wallis's Null Hypothesis Description"
         self.alternative_hypothesis_description = "Kruskal-Wallis's Alternative Hypothesis Description"
 
-        a = self.dataframe[self.target]
-        b = self.dataframe[self.candidate]
-        self.stat, self.p = kruskal(a, b)
+        self.stat, self.p = kruskal(*self.candidates)
 
     def execute_wilcoxon_rank_sum(self):
         """
@@ -214,9 +213,7 @@ class HypothesisTest:
         self.null_hypothesis_description = "Wilcoxon rank-sum's Null Hypothesis Description"
         self.alternative_hypothesis_description = "Wilcoxon rank-sum's Alternative Hypothesis Description"
 
-        a = self.dataframe[self.target]
-        b = self.dataframe[self.candidate]
-        self.stat, self.p = ranksums(a, b)
+        self.stat, self.p = ranksums(*self.candidates)
 
     def log_results(self, test_result: bool):
         """
@@ -239,5 +236,3 @@ class HypothesisTest:
         log.info(f"- cut value selected: {self.p_value}")  # fix description of the log entry
         log.info(f"- cut value obtained: {self.p}")  # fix description of the log entry
         log.info(f"- stat: {self.stat}")  # fix description of the log entry
-
-

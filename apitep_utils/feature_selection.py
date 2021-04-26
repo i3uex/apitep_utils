@@ -3,7 +3,7 @@ from typing import List
 import pandas as pd
 import logging
 
-from apitep_utils.hypothesistest import HypothesisTest
+from apitep_utils.hypothesis_test import HypothesisTest
 
 log = logging.getLogger(__name__)
 

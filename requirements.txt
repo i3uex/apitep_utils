@@ -3,5 +3,5 @@ numpy~=1.20.1
 pandas~=1.2.3
 plotly~=4.14.3
 scipy~=1.6.3
-setuptools==56.0.0
+setuptools==56.1.0
 swifter~=1.0.7

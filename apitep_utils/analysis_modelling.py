@@ -5,7 +5,7 @@ from apitep_utils.transformation import Transformation
 log = logging.getLogger(__name__)
 
 
-class Analysis(Transformation):
+class AnalysisModelling(Transformation):
 
     def analise(self):
         """
@@ -15,7 +15,7 @@ class Analysis(Transformation):
         """
 
         log.info("Process dataset")
-        log.debug("Analysis.analise()")
+        log.debug("AnalysisModelling.analise()")
 
         raise NotImplementedError
 
@@ -25,6 +25,6 @@ class Analysis(Transformation):
         """
 
         log.info("Save analysis result")
-        log.debug("Analysis.save()")
+        log.debug("AnalysisModelling.save()")
 
         raise NotImplementedError

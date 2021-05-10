@@ -71,7 +71,7 @@ class Integration(Transformation):
         if save_report_on_load is None:
             self.save_report_on_load = False
         if save_report_on_save is None:
-            self.save_report_on_load = True
+            self.save_report_on_save = True
         if report_type is None:
             self.report_type = Transformation.ReportType.Advanced
 

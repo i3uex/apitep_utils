@@ -1,6 +1,5 @@
 from typing import List
 
-import pandas as pd
 import logging
 
 from apitep_utils.hypothesis_test import HypothesisTest
@@ -13,46 +12,34 @@ class FeatureSelection:
     Select the features that a given feature depends on after performing a
     series of dependency tests (specific hypothesis tests) on them.
 
-    - dataframe: pandas dataframe with all the variables relevant to this study.
-    - target_name: name of the column where the target variable values are.
     - dependency_tests: list of instances of the class DependencyTest containing
     the description of the tests to perform on each candidate to influence the
     target variable.
-    - dependency_tests_results: list of results produced by the dependency
+    - influencing_features: list of results produced by the dependency
     tests.
     """
 
-    dataframe: pd.DataFrame
-    target_name: str
     dependency_tests: List[HypothesisTest]
-    dependency_tests_results: List[bool]
+    influencing_features: List = []
 
     def __init__(
             self,
-            dataframe: pd.DataFrame,
-            target_name: str,
-            dependency_tests: List[HypothesisTest]
+            dependency_tests: List[HypothesisTest],
     ):
         """
         Create an instance of the class. Just store the parameters provided in
         the corresponding class attributes.
 
-        :param dataframe: pandas dataframe with the variables of the study.
-        :param target_name: name of the column where the target variable values
-        are.
         :param dependency_tests: list of instances of the class DependencyTest
         containing the description of the tests to perform on each candidate to
         influence the target variable.
+
         """
 
         log.info("Init feature selection")
         log.debug(f"FeatureSelection.__init__("
-                  f"dataframe={dataframe}, "
-                  f"target_name={target_name}, "
                   f"dependency_tests={dependency_tests})")
 
-        self.dataframe = dataframe
-        self.target_name = target_name
         self.dependency_tests = dependency_tests
 
     def process(self):
@@ -64,10 +51,11 @@ class FeatureSelection:
         log.info("Process feature selection")
         log.debug("FeatureSelection.process()")
 
-        self.dependency_tests_results = []
         for dependency_test in self.dependency_tests:
             dependency_test_result = dependency_test.execute()
             if dependency_test_result:
-                self.dependency_tests_results.append(dependency_test.candidate)
-                # cambiar nombre del resultado, dependency_test_result sería derivado de influencing_features
-                # influencing_features es el nombre de la lista devuelta
+                name = dependency_test.candidates[0].name
+                self.influencing_features.append(name)
+        log.info("The final list of influencing features are the next:")
+        log.info(self.influencing_features)
+

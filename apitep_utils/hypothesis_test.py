@@ -28,6 +28,7 @@ class HypothesisTest:
     - p_value: cut value for the H0 of the test to be true. False if the result
     of the test if greater than that.
     """
+    # TODO: Allowing the class to have an extension point
 
     class TestType(Enum):
         Pearson = "Pearson"
@@ -77,10 +78,10 @@ class HypothesisTest:
 
         log.info("Init tests")
         log.debug(f"Tests.__init__("
-                  f"dataframe={len(dataframe.index)} rows, "
+                 ## f"dataframe={len(dataframe.index)} rows, "
                   f"test_type={test_type}, "
-                  f"target={len(target.index)}, "
-                  f"candidates={len(candidates)}, "
+                ##  f"target={len(target.index)}, "
+                ##   f"candidates={len(candidates)}, "
                   f"p_value={p_value})")
 
         if dataframe is not None:
@@ -170,8 +171,8 @@ class HypothesisTest:
         log.info("Execute Levene test")
         log.debug("Tests.execute_levene()")
 
-        self.null_hypothesis_description = "Levene's Null Hypothesis Description"
-        self.alternative_hypothesis_description = "Levene's Alternative Hypothesis Description"
+        self.null_hypothesis_description = "The population variances are equal"
+        self.alternative_hypothesis_description = "The population variances are not equal"
 
         self.stat, self.p = levene(*self.candidates)
 
@@ -183,8 +184,8 @@ class HypothesisTest:
         log.info("Execute Shapiro test")
         log.debug("Tests.execute_shapiro()")
 
-        self.null_hypothesis_description = "Shapiro Null Hypothesis Description"
-        self.alternative_hypothesis_description = "Shapiro Alternative Hypothesis Description"
+        self.null_hypothesis_description = "The target variable is normally distributed"
+        self.alternative_hypothesis_description = "The target variable is not normally distributed"
 
         a = self.target
         self.stat, self.p = shapiro(a)
@@ -197,8 +198,8 @@ class HypothesisTest:
         log.info("Execute Kruskal Wallis test")
         log.debug("Tests.execute_kruskal_wallis()")
 
-        self.null_hypothesis_description = "Kruskal-Wallis's Null Hypothesis Description"
-        self.alternative_hypothesis_description = "Kruskal-Wallis's Alternative Hypothesis Description"
+        self.null_hypothesis_description = "The mean ranks of the groups are the same"
+        self.alternative_hypothesis_description = "The mean ranks of the groups are not the same"
 
         self.stat, self.p = kruskal(*self.candidates)
 
@@ -210,8 +211,8 @@ class HypothesisTest:
         log.info("Execute Wilcoxon rank-sum test")
         log.debug("Tests.execute_wilcoxon_rank_sum()")
 
-        self.null_hypothesis_description = "Wilcoxon rank-sum's Null Hypothesis Description"
-        self.alternative_hypothesis_description = "Wilcoxon rank-sum's Alternative Hypothesis Description"
+        self.null_hypothesis_description = "The populations have the same distribution"
+        self.alternative_hypothesis_description = "The populations have not the same distribution"
 
         self.stat, self.p = ranksums(*self.candidates)
 

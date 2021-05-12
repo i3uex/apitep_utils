@@ -6,6 +6,8 @@ log = logging.getLogger(__name__)
 
 
 class AnalysisModelling(Transformation):
+    save_report_on_load = False
+    save_report_on_save = False
 
     def analise(self):
         """

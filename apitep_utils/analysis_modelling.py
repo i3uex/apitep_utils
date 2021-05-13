@@ -1,11 +1,11 @@
 import logging
 
-from apitep_utils.transformation import Transformation
+from apitep_utils.data_processor import DataProcessor
 
 log = logging.getLogger(__name__)
 
 
-class AnalysisModelling(Transformation):
+class AnalysisModelling(DataProcessor):
     save_report_on_load = False
     save_report_on_save = False
 

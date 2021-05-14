@@ -16,10 +16,8 @@ log = logging.getLogger(__name__)
 class DataProcessor:
     """
     Common pandas dataset load, transform, and save operations.
-
     Create an instance of this class, tell it where is the source dataset and
     where the resulting one should be saved, and process the changes needed.
-
     Optionally, generate a reports about the source and destination datasets,
     on load or save.
     """
@@ -53,10 +51,11 @@ class DataProcessor:
             save_report_on_save: bool = None,
             report_type: ReportType = None,
             report_path: str = None
+            # Esta variable luego no llegas a utilizarla, sin embargo report_path si, pero no la inicializas.
+
     ):
         """
         Init DataProcessor class instance.
-
         :param input_path_segment: path to the input CSV dataset to process.
         Optional.
         :param output_path_segment: path where the input CSV dataset, after
@@ -155,7 +154,6 @@ class DataProcessor:
         """
         Make all the changes needed in the input dataframe to get the output
         dataframe.
-
         Make sure to use `input_df` as the input of your pipeline, and to store
         the resulting dataset in `output_df`.
         """
@@ -170,7 +168,6 @@ class DataProcessor:
     def log_changes(self):
         """
         Dump to log how many changes are made to the dataset.
-
         The changes should be stored in the property `changes` as pair key,
         value where the key is the description of the change, and the value is
         what actually happened.
@@ -186,7 +183,6 @@ class DataProcessor:
         """
         Parse arguments provided via command line, and check if they are valid
         or not. Adequate defaults are provided when possible.
-
         Parsed arguments are:
         - path to the input CSV dataset.
         - path to the output CSV dataset.
@@ -247,7 +243,6 @@ class DataProcessor:
         """
         Save a report about the provided dataframe in the path provided,
         using Pandas Profiling, changing the extension to "html".
-
         :param dataframe: dataframe a report should be generated about.
         :param source_path_segment: path to the CSV data source used to create
         the dataframe. It will be used to compose the output path.
@@ -283,7 +278,6 @@ class DataProcessor:
         """
         Save an advanced report about the provided dataframe in the path
         provided, changing the extension as needed.
-
         :param dataframe: dataframe a report should be generated about.
         :param source_path_segment: path to the CSV data source used to create
         the dataframe. It will be used to compose the output path.
@@ -316,7 +310,6 @@ class DataProcessor:
         execution time of a method. Time is measured before and after the
         execution of the method. A debug log entry is added showing the
         difference.
-
         :param func: method to measure.
         """
 
@@ -333,7 +326,6 @@ class DataProcessor:
         """
         Returns Swifter version. This is here just to avoid PyCharm removing
         Swifter's import.
-
         :return: Swifter version.
         :rtype: str
         """

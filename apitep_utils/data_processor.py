@@ -35,9 +35,9 @@ class DataProcessor:
     output_path_segment: str = None
     input_separator: str = ","
     output_separator: str = ","
-    save_report_on_load: bool = True
-    save_report_on_save: bool = True
-    report_type: ReportType = ReportType.Advanced
+    save_report_on_load: bool = False
+    save_report_on_save: bool = False
+    report_type: ReportType = None
     report_path_segment: str = None
 
     input_df: pd.DataFrame = None

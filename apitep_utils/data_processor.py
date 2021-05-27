@@ -39,6 +39,7 @@ class DataProcessor:
     save_report_on_save: bool = False
     report_type: ReportType = None
     report_path_segment: str = None
+    input_type_excel: bool = False
 
     input_df: pd.DataFrame = None
     output_df: pd.DataFrame = None
@@ -52,7 +53,8 @@ class DataProcessor:
             save_report_on_load: bool = None,
             save_report_on_save: bool = None,
             report_type: ReportType = None,
-            report_path_segment: str = None
+            report_path_segment: str = None,
+            input_type_excel: bool = None
     ):
         """
         Init DataProcessor class instance.
@@ -69,6 +71,7 @@ class DataProcessor:
         save_report_on_load or save_report_on_save are True.
         :param report_path_segment: where to save the reports. If not presents,
         they will be stored in the dataset's folder.
+        :param input_type_excel: load with configuration of excel if True. Optional.
         """
 
         log.info("Init data processor")
@@ -80,7 +83,8 @@ class DataProcessor:
                   f"save_report_on_load={save_report_on_load}, "
                   f"save_report_on_save={save_report_on_save}, "
                   f"report_type={report_type}, "
-                  f"report_path_segment={report_path_segment})")
+                  f"report_path_segment={report_path_segment}, "
+                  f"input_type_excel={input_type_excel})")
 
         if input_path_segment is not None:
             self.input_path_segment = input_path_segment
@@ -106,9 +110,12 @@ class DataProcessor:
         if report_path_segment is not None:
             self.report_path_segment = report_path_segment
 
+        if input_type_excel is not None:
+            self.input_type_excel = input_type_excel
+
     def load(self):
         """
-        Load the CSV dataset in the input path provided. Optionally, save a
+        Load the CSV or Excel dataset in the input path provided. Optionally, save a
         report in the same path, with the same name, but with HTML extension.
         """
 
@@ -118,10 +125,15 @@ class DataProcessor:
         if self.input_path_segment is None:
             log.debug("- input path is none, nothing to load or report about")
             return
-
-        self.input_df = pd.read_csv(
-            self.input_path_segment,
-            sep=self.input_separator)
+        if not self.input_type_excel:
+            self.input_df = pd.read_csv(
+                self.input_path_segment,
+                sep=self.input_separator)
+        else:
+            self.input_df = pd.read_excel(
+                self.input_path_segment,
+                header=0
+            )
 
         if self.save_report_on_load:
             self.save_report(self.input_df, self.input_path_segment)

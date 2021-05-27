@@ -28,7 +28,7 @@ class Integration(Transformation):
             output_separator: str = None,
             save_report_on_load: bool = None,
             save_report_on_save: bool = None,
-            report_type: Transformation.ReportType = None
+            report_type: Transformation.ReportType = None,
     ):
         """
         Init Integration class instance.

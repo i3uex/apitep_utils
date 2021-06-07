@@ -158,7 +158,8 @@ class DataProcessor:
 
         self.output_df.to_csv(
             self.output_path_segment,
-            sep=self.output_separator)
+            sep=self.output_separator,
+            index=False)
 
         if self.save_report_on_save:
             self.save_report(self.output_df, self.output_path_segment)

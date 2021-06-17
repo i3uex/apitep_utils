@@ -79,7 +79,7 @@ class Report:
             self.numerical_html_files.append(path + '/individual_reports' + '/qqplot_' + col + '.html')
 
     def generate_categorical_plots_ploty(self, ds, path):
-        ds_cat = ds.select_dtypes(include=['category'])
+        ds_cat = ds.select_dtypes(include=['category','object'])
         for col in ds_cat:
             fig_barplot = self.generate_histogram_ploty(ds, col)
             py.offline.plot(fig_barplot, filename=path + '/individual_reports' + '/barplot' + col + '.html')

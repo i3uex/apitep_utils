@@ -1,7 +1,9 @@
 README.md
 setup.py
 apitep_utils/__init__.py
+apitep_utils/analysis_modelling.py
 apitep_utils/argparse_helper.py
+apitep_utils/data_processor.py
 apitep_utils/dataset_subsampler.py
 apitep_utils/date.py
 apitep_utils/encrypter.py

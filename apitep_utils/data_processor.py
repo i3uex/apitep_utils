@@ -130,10 +130,11 @@ class DataProcessor:
                 self.input_path_segment,
                 sep=self.input_separator)
         else:
-            self.input_df = pd.read_excel(
+            self.input_df = pd.concat([pd.read_excel(
                 self.input_path_segment,
-                header=0
-            )
+                header=0,
+                sheet_name=None
+            )])
 
         if self.save_report_on_load:
             self.save_report(self.input_df, self.input_path_segment)

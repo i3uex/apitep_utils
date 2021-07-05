@@ -62,7 +62,7 @@ class FeatureEngineering(Transformation):
         if save_report_on_load is None:
             self.save_report_on_load = False
         if save_report_on_save is None:
-            self.save_report_on_load = False
+            self.save_report_on_save = False
 
     def execute(self):
         """

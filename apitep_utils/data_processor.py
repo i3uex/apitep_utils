@@ -134,7 +134,7 @@ class DataProcessor:
                 self.input_path_segment,
                 header=0,
                 sheet_name=None
-            ),ignore_index=True)
+            ), ignore_index=True)
 
         if self.save_report_on_load:
             self.save_report(self.input_df, self.input_path_segment)

@@ -88,12 +88,20 @@ class Integration(Transformation):
         if self.input_path_segments is None:
             log.debug("- input path is none, nothing to load or report about")
             return
-
-        for input_path_segment in self.input_path_segments:
-            input_df = pd.read_csv(
-                input_path_segment,
-                sep=self.input_separator)
-            self.input_dfs.append(input_df)
+        if not self.input_type_excel:
+            for input_path_segment in self.input_path_segments:
+                input_df = pd.read_csv(
+                    input_path_segment,
+                    sep=self.input_separator)
+                self.input_dfs.append(input_df)
+        else:
+            for input_path_segment in self.input_path_segments:
+                input_df = pd.concat(pd.read_excel(
+                    input_path_segment,
+                    header=0,
+                    sheet_name=None
+                ), ignore_index=True)
+                self.input_dfs.append(input_df)
 
         if self.save_report_on_load:
             for index, input_df in enumerate(self.input_dfs):

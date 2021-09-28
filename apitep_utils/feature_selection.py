@@ -21,6 +21,7 @@ class FeatureSelection:
 
     dependency_tests: List[HypothesisTest]
     influencing_features: List = []
+    not_influencing_features: List = []
 
     def __init__(
             self,
@@ -56,6 +57,11 @@ class FeatureSelection:
             if dependency_test_result:
                 name = dependency_test.candidates[0].name
                 self.influencing_features.append(name)
-        log.info("The final list of influencing features are the next:")
+            else:
+                name = dependency_test.candidates[0].name
+                self.not_influencing_features.append(name)
+        log.info("The list of influencing features are the next:")
         log.info(self.influencing_features)
+        log.info("The list of not influencing features are the next:")
+        log.info(self.not_influencing_features)
 

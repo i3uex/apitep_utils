@@ -3,7 +3,6 @@ from datetime import datetime
 
 
 class Date:
-
     DEFAULT_FORMAT = "%Y-%m-%d"
 
     @staticmethod

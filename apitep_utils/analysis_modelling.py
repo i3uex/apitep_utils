@@ -1,14 +1,14 @@
 import logging
 import sys
 from apitep_utils.data_processor import DataProcessor
-
+from typing import List
 log = logging.getLogger(__name__)
 
 
 class AnalysisModeling(DataProcessor):
     save_report_on_load = False
     save_report_on_save = False
-    model_developed = None
+    models_developed: List = []
 
     def analise(self):
         """

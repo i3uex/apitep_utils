@@ -35,10 +35,9 @@ This class will enable us to generate reports on the input and output datasets f
 The following classes have a series of basic functions structured according to this logic:
 
 - __init__: initialise the class with the necessary arguments to configure the class: input_path_segments, output_path_segments, input_separator, output_separator, save_report_on_load, save_report_on_save.
-- load(): load the datasets to be used in that class.
-- process(): process the data by calling different functions that make up the data processing.
-- save(): save the resulting datasets.
-- 
+- __load()__: load the datasets to be used in that class.
+- __process()__: process the data by calling different functions that make up the data processing.
+- __save()__: save the resulting datasets.
 Each class consists of a series of basic transformations related to the corresponding pipeline stage. For example, feature selection executes a series of statistical tests in process() that allow the different variables to be selected or not.
 
 ### ETL

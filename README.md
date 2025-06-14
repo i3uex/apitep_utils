@@ -20,7 +20,7 @@ This framework understands the process of developing a data science project divi
 
 Based on this structure, we will develop a series of classes composed of Transformations, which will allow us to structure data science projects in this way and provide a structure that maximises the reproducibility and replicability of the project.
 
-For more details on this framework, please refer to the following paper: [Melchor, F., Rodriguez-Echeverria, R., Conejero, J.M., Prieto, Á.E., Gutiérrez, J.D. (2022). A Model-Driven Approach for Systematic Reproducibility and Replicability of Data Science Projects. In: Franch, X., Poels, G., Gailly, F., Snoeck, M. (eds) Advanced Information Systems Engineering. CAiSE 2022. Lecture Notes in Computer Science, vol 13295. Springer, Cham. https://doi.org/10.1007/978-3-031-07472-1_9](https://doi.org/10.1007/978-3-031-07472-1_9)
+For more details on this framework, please refer to the following paper: [Melchor, F., Rodriguez-Echeverria, R., Conejero, J.M., Prieto, Á.E., Gutiérrez, J.D. (2022). A Model-Driven Approach for Systematic Reproducibility and Replicability of Data Science Projects. In: Franch, X., Poels, G., Gailly, F., Snoeck, M. (eds) Advanced Information Systems Engineering. CAiSE 2022. Lecture Notes in Computer Science, vol 13295. Springer, Cham.](https://doi.org/10.1007/978-3-031-07472-1_9)
 
 
 

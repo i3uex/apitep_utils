@@ -29,7 +29,7 @@ For more details on this framework, please refer to the following paper: [Melcho
 ### Transformation
 Transformation is our base class for implementing the different data processing operations that make up our pipeline.
 
-## Report
+### Report
 This class will enable us to generate reports on the input and output datasets for each phase, to see how their structure has changed after applying the different transformations.
 
 The following classes have a series of basic functions structured according to this logic:

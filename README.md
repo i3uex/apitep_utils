@@ -2,6 +2,10 @@
 
 Set of tools design in MD4DSPRR project, easily exportable to other data projects.
 
+## Prerequisites
+- **Python 3.10+** (virtual environment recommended)
+- **Operating System:** Linux (or Windows Subsystem for Linux)
+
 ## Installation
 
 Get a copy of this repository. Then, open a terminal in the same folder this file is and execute the command:
@@ -22,7 +26,12 @@ Based on this structure, we will develop a series of classes composed of Transfo
 
 For more details on this framework, please refer to the following paper: [Melchor, F., Rodriguez-Echeverria, R., Conejero, J.M., Prieto, Á.E., Gutiérrez, J.D. (2022). A Model-Driven Approach for Systematic Reproducibility and Replicability of Data Science Projects. In: Franch, X., Poels, G., Gailly, F., Snoeck, M. (eds) Advanced Information Systems Engineering. CAiSE 2022. Lecture Notes in Computer Science, vol 13295. Springer, Cham.](https://doi.org/10.1007/978-3-031-07472-1_9)
 
+## License
+This project is licensed under the [MIT License](https://github.com/i3uex/apitep_utils/blob/main/LICENSE.md)
 
+## Authors and Affiliations
+- __Juan D. Gutiérrez__ - University of Extremadura and University of Santiago de Compostela - [juandiego.gutierrez@usc.es](mailto:juandiego.gutierrez@usc.es)
+- __Fran Melchor__ - University of Extremadura - [frmelchorg@unex.es](mailto:frmelchorg@unex.es)
 
 ## Classes
 

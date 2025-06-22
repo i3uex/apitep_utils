@@ -30,7 +30,7 @@ For more details on this framework, please refer to the following paper: [Melcho
 This project is licensed under the [MIT License](https://github.com/i3uex/apitep_utils/blob/main/LICENSE.md)
 
 ## Authors and Affiliations
-- __Juan D. Gutiérrez__ - University of Extremadura and University of Santiago de Compostela - [juandiego.gutierrez@usc.es](mailto:juandiego.gutierrez@usc.es)
+- __Juan D. Gutiérrez__ - Universidade de Santiago de Compostela - [juandiego.gutierrez@usc.es](mailto:juandiego.gutierrez@usc.es)
 - __Fran Melchor__ - University of Extremadura - [frmelchorg@unex.es](mailto:frmelchorg@unex.es)
 
 ## Classes

@@ -3,7 +3,7 @@
 Set of tools design in MD4DSPRR project, easily exportable to other data projects.
 
 ## Prerequisites
-- **Python 3.10+** (virtual environment recommended)
+- **Python 3.10** (virtual environment recommended)
 - **Operating System:** Linux (or Windows Subsystem for Linux)
 
 ## Installation
